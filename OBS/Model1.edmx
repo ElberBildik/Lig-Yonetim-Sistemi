@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Okul_YonetimModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Dersler">
+          <Key>
+            <PropertyRef Name="DersID" />
+          </Key>
+          <Property Name="DersID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DersAdi" Type="varchar" MaxLength="100" />
+          <Property Name="OgretmenID" Type="int" />
+        </EntityType>
+        <EntityType Name="NotOrtalamalari">
+          <Key>
+            <PropertyRef Name="OgrenciID" />
+          </Key>
+          <Property Name="OgrenciID" Type="int" Nullable="false" />
+          <Property Name="DersID" Type="int" />
+          <Property Name="Ortalama" Type="decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="Ogrenci">
+          <Key>
+            <PropertyRef Name="OgrenciID" />
+          </Key>
+          <Property Name="OgrenciID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="varchar" MaxLength="20" />
+          <Property Name="Soyad" Type="varchar" MaxLength="20" />
+          <Property Name="Sinifi" Type="varchar" MaxLength="20" />
+          <Property Name="Devamsizlik" Type="int" />
+        </EntityType>
+        <EntityType Name="Ogretmen">
+          <Key>
+            <PropertyRef Name="OgretmenID" />
+          </Key>
+          <Property Name="OgretmenID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="varchar" MaxLength="20" />
+          <Property Name="Soyad" Type="varchar" MaxLength="20" />
+          <Property Name="Branş" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ProjeBilgisi">
+          <Key>
+            <PropertyRef Name="ProjeID" />
+          </Key>
+          <Property Name="ProjeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OgrenciID" Type="int" />
+          <Property Name="ProjeNotu" Type="decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="SinavBilgileri">
+          <Key>
+            <PropertyRef Name="SinavID" />
+          </Key>
+          <Property Name="SinavID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OgrenciID" Type="int" />
+          <Property Name="SinavAdi" Type="varchar" MaxLength="50" />
+          <Property Name="SinavNotu" Type="decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__Dersler__Ogretme__534D60F1">
+          <End Role="Ogretmen" Type="Self.Ogretmen" Multiplicity="0..1" />
+          <End Role="Dersler" Type="Self.Dersler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogretmen">
+              <PropertyRef Name="OgretmenID" />
+            </Principal>
+            <Dependent Role="Dersler">
+              <PropertyRef Name="OgretmenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NotOrtala__DersI__571DF1D5">
+          <End Role="Dersler" Type="Self.Dersler" Multiplicity="0..1" />
+          <End Role="NotOrtalamalari" Type="Self.NotOrtalamalari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dersler">
+              <PropertyRef Name="DersID" />
+            </Principal>
+            <Dependent Role="NotOrtalamalari">
+              <PropertyRef Name="DersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NotOrtala__Ogren__5629CD9C">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="1" />
+          <End Role="NotOrtalamalari" Type="Self.NotOrtalamalari" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="OgrenciID" />
+            </Principal>
+            <Dependent Role="NotOrtalamalari">
+              <PropertyRef Name="OgrenciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProjeBilg__Ogren__5070F446">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="0..1" />
+          <End Role="ProjeBilgisi" Type="Self.ProjeBilgisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="OgrenciID" />
+            </Principal>
+            <Dependent Role="ProjeBilgisi">
+              <PropertyRef Name="OgrenciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SinavBilg__Ogren__4D94879B">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="0..1" />
+          <End Role="SinavBilgileri" Type="Self.SinavBilgileri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="OgrenciID" />
+            </Principal>
+            <Dependent Role="SinavBilgileri">
+              <PropertyRef Name="OgrenciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Okul_YonetimModelStoreContainer">
+          <EntitySet Name="Dersler" EntityType="Self.Dersler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotOrtalamalari" EntityType="Self.NotOrtalamalari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ogrenci" EntityType="Self.Ogrenci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ogretmen" EntityType="Self.Ogretmen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjeBilgisi" EntityType="Self.ProjeBilgisi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SinavBilgileri" EntityType="Self.SinavBilgileri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Dersler__Ogretme__534D60F1" Association="Self.FK__Dersler__Ogretme__534D60F1">
+            <End Role="Ogretmen" EntitySet="Ogretmen" />
+            <End Role="Dersler" EntitySet="Dersler" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NotOrtala__DersI__571DF1D5" Association="Self.FK__NotOrtala__DersI__571DF1D5">
+            <End Role="Dersler" EntitySet="Dersler" />
+            <End Role="NotOrtalamalari" EntitySet="NotOrtalamalari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NotOrtala__Ogren__5629CD9C" Association="Self.FK__NotOrtala__Ogren__5629CD9C">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="NotOrtalamalari" EntitySet="NotOrtalamalari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProjeBilg__Ogren__5070F446" Association="Self.FK__ProjeBilg__Ogren__5070F446">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="ProjeBilgisi" EntitySet="ProjeBilgisi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SinavBilg__Ogren__4D94879B" Association="Self.FK__SinavBilg__Ogren__4D94879B">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="SinavBilgileri" EntitySet="SinavBilgileri" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Okul_YonetimModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Dersler">
+          <Key>
+            <PropertyRef Name="DersID" />
+          </Key>
+          <Property Name="DersID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DersAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OgretmenID" Type="Int32" />
+          <NavigationProperty Name="Ogretmen" Relationship="Self.FK__Dersler__Ogretme__534D60F1" FromRole="Dersler" ToRole="Ogretmen" />
+          <NavigationProperty Name="NotOrtalamalari" Relationship="Self.FK__NotOrtala__DersI__571DF1D5" FromRole="Dersler" ToRole="NotOrtalamalari" />
+        </EntityType>
+        <EntityType Name="NotOrtalamalari">
+          <Key>
+            <PropertyRef Name="OgrenciID" />
+          </Key>
+          <Property Name="OgrenciID" Type="Int32" Nullable="false" />
+          <Property Name="DersID" Type="Int32" />
+          <Property Name="Ortalama" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="Dersler" Relationship="Self.FK__NotOrtala__DersI__571DF1D5" FromRole="NotOrtalamalari" ToRole="Dersler" />
+          <NavigationProperty Name="Ogrenci" Relationship="Self.FK__NotOrtala__Ogren__5629CD9C" FromRole="NotOrtalamalari" ToRole="Ogrenci" />
+        </EntityType>
+        <EntityType Name="Ogrenci">
+          <Key>
+            <PropertyRef Name="OgrenciID" />
+          </Key>
+          <Property Name="OgrenciID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Soyad" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Sinifi" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Devamsizlik" Type="Int32" />
+          <NavigationProperty Name="NotOrtalamalari" Relationship="Self.FK__NotOrtala__Ogren__5629CD9C" FromRole="Ogrenci" ToRole="NotOrtalamalari" />
+          <NavigationProperty Name="ProjeBilgisi" Relationship="Self.FK__ProjeBilg__Ogren__5070F446" FromRole="Ogrenci" ToRole="ProjeBilgisi" />
+          <NavigationProperty Name="SinavBilgileri" Relationship="Self.FK__SinavBilg__Ogren__4D94879B" FromRole="Ogrenci" ToRole="SinavBilgileri" />
+        </EntityType>
+        <EntityType Name="Ogretmen">
+          <Key>
+            <PropertyRef Name="OgretmenID" />
+          </Key>
+          <Property Name="OgretmenID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Soyad" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Branş" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Dersler" Relationship="Self.FK__Dersler__Ogretme__534D60F1" FromRole="Ogretmen" ToRole="Dersler" />
+        </EntityType>
+        <EntityType Name="ProjeBilgisi">
+          <Key>
+            <PropertyRef Name="ProjeID" />
+          </Key>
+          <Property Name="ProjeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OgrenciID" Type="Int32" />
+          <Property Name="ProjeNotu" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="Ogrenci" Relationship="Self.FK__ProjeBilg__Ogren__5070F446" FromRole="ProjeBilgisi" ToRole="Ogrenci" />
+        </EntityType>
+        <EntityType Name="SinavBilgileri">
+          <Key>
+            <PropertyRef Name="SinavID" />
+          </Key>
+          <Property Name="SinavID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OgrenciID" Type="Int32" />
+          <Property Name="SinavAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SinavNotu" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="Ogrenci" Relationship="Self.FK__SinavBilg__Ogren__4D94879B" FromRole="SinavBilgileri" ToRole="Ogrenci" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__Dersler__Ogretme__534D60F1">
+          <End Role="Ogretmen" Type="Self.Ogretmen" Multiplicity="0..1" />
+          <End Role="Dersler" Type="Self.Dersler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogretmen">
+              <PropertyRef Name="OgretmenID" />
+            </Principal>
+            <Dependent Role="Dersler">
+              <PropertyRef Name="OgretmenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NotOrtala__DersI__571DF1D5">
+          <End Role="Dersler" Type="Self.Dersler" Multiplicity="0..1" />
+          <End Role="NotOrtalamalari" Type="Self.NotOrtalamalari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dersler">
+              <PropertyRef Name="DersID" />
+            </Principal>
+            <Dependent Role="NotOrtalamalari">
+              <PropertyRef Name="DersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NotOrtala__Ogren__5629CD9C">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="1" />
+          <End Role="NotOrtalamalari" Type="Self.NotOrtalamalari" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="OgrenciID" />
+            </Principal>
+            <Dependent Role="NotOrtalamalari">
+              <PropertyRef Name="OgrenciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProjeBilg__Ogren__5070F446">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="0..1" />
+          <End Role="ProjeBilgisi" Type="Self.ProjeBilgisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="OgrenciID" />
+            </Principal>
+            <Dependent Role="ProjeBilgisi">
+              <PropertyRef Name="OgrenciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SinavBilg__Ogren__4D94879B">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="0..1" />
+          <End Role="SinavBilgileri" Type="Self.SinavBilgileri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="OgrenciID" />
+            </Principal>
+            <Dependent Role="SinavBilgileri">
+              <PropertyRef Name="OgrenciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Okul_YonetimEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Dersler" EntityType="Self.Dersler" />
+          <EntitySet Name="NotOrtalamalari" EntityType="Self.NotOrtalamalari" />
+          <EntitySet Name="Ogrenci" EntityType="Self.Ogrenci" />
+          <EntitySet Name="Ogretmen" EntityType="Self.Ogretmen" />
+          <EntitySet Name="ProjeBilgisi" EntityType="Self.ProjeBilgisi" />
+          <EntitySet Name="SinavBilgileri" EntityType="Self.SinavBilgileri" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK__Dersler__Ogretme__534D60F1" Association="Self.FK__Dersler__Ogretme__534D60F1">
+            <End Role="Ogretmen" EntitySet="Ogretmen" />
+            <End Role="Dersler" EntitySet="Dersler" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NotOrtala__DersI__571DF1D5" Association="Self.FK__NotOrtala__DersI__571DF1D5">
+            <End Role="Dersler" EntitySet="Dersler" />
+            <End Role="NotOrtalamalari" EntitySet="NotOrtalamalari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NotOrtala__Ogren__5629CD9C" Association="Self.FK__NotOrtala__Ogren__5629CD9C">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="NotOrtalamalari" EntitySet="NotOrtalamalari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProjeBilg__Ogren__5070F446" Association="Self.FK__ProjeBilg__Ogren__5070F446">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="ProjeBilgisi" EntitySet="ProjeBilgisi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SinavBilg__Ogren__4D94879B" Association="Self.FK__SinavBilg__Ogren__4D94879B">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="SinavBilgileri" EntitySet="SinavBilgileri" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Okul_YonetimModelStoreContainer" CdmEntityContainer="Okul_YonetimEntities">
+          <EntitySetMapping Name="Dersler">
+            <EntityTypeMapping TypeName="Okul_YonetimModel.Dersler">
+              <MappingFragment StoreEntitySet="Dersler">
+                <ScalarProperty Name="DersID" ColumnName="DersID" />
+                <ScalarProperty Name="DersAdi" ColumnName="DersAdi" />
+                <ScalarProperty Name="OgretmenID" ColumnName="OgretmenID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotOrtalamalari">
+            <EntityTypeMapping TypeName="Okul_YonetimModel.NotOrtalamalari">
+              <MappingFragment StoreEntitySet="NotOrtalamalari">
+                <ScalarProperty Name="OgrenciID" ColumnName="OgrenciID" />
+                <ScalarProperty Name="DersID" ColumnName="DersID" />
+                <ScalarProperty Name="Ortalama" ColumnName="Ortalama" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ogrenci">
+            <EntityTypeMapping TypeName="Okul_YonetimModel.Ogrenci">
+              <MappingFragment StoreEntitySet="Ogrenci">
+                <ScalarProperty Name="OgrenciID" ColumnName="OgrenciID" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="Sinifi" ColumnName="Sinifi" />
+                <ScalarProperty Name="Devamsizlik" ColumnName="Devamsizlik" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ogretmen">
+            <EntityTypeMapping TypeName="Okul_YonetimModel.Ogretmen">
+              <MappingFragment StoreEntitySet="Ogretmen">
+                <ScalarProperty Name="OgretmenID" ColumnName="OgretmenID" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="Branş" ColumnName="Branş" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjeBilgisi">
+            <EntityTypeMapping TypeName="Okul_YonetimModel.ProjeBilgisi">
+              <MappingFragment StoreEntitySet="ProjeBilgisi">
+                <ScalarProperty Name="ProjeID" ColumnName="ProjeID" />
+                <ScalarProperty Name="OgrenciID" ColumnName="OgrenciID" />
+                <ScalarProperty Name="ProjeNotu" ColumnName="ProjeNotu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SinavBilgileri">
+            <EntityTypeMapping TypeName="Okul_YonetimModel.SinavBilgileri">
+              <MappingFragment StoreEntitySet="SinavBilgileri">
+                <ScalarProperty Name="SinavID" ColumnName="SinavID" />
+                <ScalarProperty Name="OgrenciID" ColumnName="OgrenciID" />
+                <ScalarProperty Name="SinavAdi" ColumnName="SinavAdi" />
+                <ScalarProperty Name="SinavNotu" ColumnName="SinavNotu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Okul_YonetimModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

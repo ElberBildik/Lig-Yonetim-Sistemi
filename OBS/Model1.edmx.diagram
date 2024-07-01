@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="196f328b5f43402b938cd71ed9be417d" Name="Diagram1">
+        <EntityTypeShape EntityType="Okul_YonetimModel.Dersler" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Okul_YonetimModel.NotOrtalamalari" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Okul_YonetimModel.Ogrenci" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Okul_YonetimModel.Ogretmen" Width="1.5" PointX="1.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Okul_YonetimModel.ProjeBilgisi" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Okul_YonetimModel.SinavBilgileri" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Okul_YonetimModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="1.625" IsExpanded="true" />
+        <AssociationConnector Association="Okul_YonetimModel.FK__Dersler__Ogretme__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="Okul_YonetimModel.FK__NotOrtala__DersI__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="Okul_YonetimModel.FK__NotOrtala__Ogren__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="Okul_YonetimModel.FK__ProjeBilg__Ogren__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="Okul_YonetimModel.FK__SinavBilg__Ogren__4D94879B" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
